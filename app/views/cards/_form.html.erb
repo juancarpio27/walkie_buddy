@@ -1,0 +1,43 @@
+<%= form_for @card,url: user_card_path(current_user) , html: { multipart: true } do  |f| %>
+
+    <% if @card.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@card.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+          <ul>
+            <% @card.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.text_field :brand, {class: 'form-control', placeholder: "Tipo"} %>
+    </div>
+
+    <div class="form-group">
+      <%= f.text_field :holder_name, {class: 'form-control', placeholder: "Nombre"} %>
+    </div>
+
+    <div class="form-group">
+      <%= f.text_field :number, {class: 'form-control', placeholder: "Número"} %>
+    </div>
+
+    <div class="form-group">
+      <%= f.text_field :expiration_month, {class: 'form-control', placeholder: "Mes de expiración"} %>
+    </div>
+
+    <div class="form-group">
+      <%= f.text_field :expiration_year, {class: 'form-control', placeholder: "Año de expiración"} %>
+    </div>
+
+    <div class="form-group">
+      <input type="number" class="form-control" placeholder="CVV">
+    </div>
+
+    <div class="actions">
+      <%= f.submit 'Guardar' , class: "btn btn-primary" %>
+    </div>
+
+<% end %>

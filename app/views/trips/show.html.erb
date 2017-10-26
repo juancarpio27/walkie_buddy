@@ -1,0 +1,112 @@
+<%= render 'menu/navbar' %>
+
+<div class="row mt-4">
+  <div class="col-md-1"></div>
+  <div class="col-md-6">
+    <h5>Paseo #<%= @trip.id %> <%= link_to '<< Regresar', authenticated_root_path %></h5>
+    <% if @trip.pending? %>
+        <span class="badge badge-primary">Pendiente</span>
+    <% elsif @trip.completed? %>
+        <span class="badge badge-success">Completado</span>
+    <% elsif @trip.canceled? %>
+        <span class="badge badge-danger">Cancelado</span>
+    <% end %>
+    <br>
+
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-6">
+    <div class="card mt-4">
+      <h5 class="card-header">
+        Paseador
+      </h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <%= image_tag(@trip.walker.avatar, {size: "80",  class: "rounded-circle"}) %>
+            <table class="table">
+              <tr>
+                <td>Nombre:</td>
+                <td><p><%= @trip.walker.full_name %></p></td>
+              </tr>
+              <tr>
+                <td>Correo electrónico</td>
+                <td><p><%= @trip.walker.email %></p></td>
+              </tr>
+              <tr>
+                <td>Teléfono</td>
+                <td><p><%= @trip.walker.phone %></p></td>
+              </tr>
+              <tr>
+                <td>Calificación</td>
+                <td>
+                  <% if @trip.walker.trips_total > 0 %>
+                    <%= @trip.walker.trips_sum/@trip.walker.trips_total %> <i class="fa fa-star" aria-hidden="true"></i>
+                  <% else %>
+                    <p>Aun no hay calificacions disponibles para este paseador</p>
+                  <% end %>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-md-6">
+            <h5>Biografía</h5>
+            <p><%= @trip.walker.biography %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="card mt-4">
+      <h5 class="card-header">
+        Información del paseo
+      </h5>
+      <div class="card-body">
+        <div class="row">
+          <table class="table">
+            <tr>
+              <td>Precio</td>
+              <td><%= @trip.price %></td>
+            </tr>
+            <tr>
+              <td>Fecha</td>
+              <td><%= @trip.date %></td>
+            </tr>
+            <tr>
+              <td>Dirección</td>
+              <td><%= @trip.address %></td>
+            </tr>
+            <tr>
+              <td>Duración</td>
+              <td><%= @trip.duration %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <h5 class="card-header">
+        Mascotas
+      </h5>
+      <div class="card-body">
+        <div class="row">
+          <table class="table">
+          <% @trip.pets.each do |pet| %>
+                <tr>
+                  <td><%= image_tag(pet.avatar, {size: "40", class: "rounded-circle"} ) %></td>
+                  <td><%= pet.name %></td>
+                </tr>
+          <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

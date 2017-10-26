@@ -1,0 +1,37 @@
+<%= render 'menu/navbar' %>
+
+<div class="row mt-4">
+  <div class="col-md-1"></div>
+  <div class="col-md-6">
+    <h5>Historial de paseos <%= link_to '<< Regresar', authenticated_root_path %></h5>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-1"></div>
+  <div class="col-md-8">
+    <table class="table">
+      <% @trips.each do |trip| %>
+        <tr>
+          <td>Código: <%= trip.id %></td>
+          <td>
+            <% if trip.pending? %>
+                <span class="badge badge-primary">Pendiente</span>
+            <% elsif trip.completed? %>
+                <span class="badge badge-success">Completado</span>
+            <% elsif trip.canceled? %>
+                <span class="badge badge-danger">Cancelado</span>
+            <% end %>
+          </td>
+          <td><%= link_to "Detalles", user_trip_path(current_user,trip) %></td>
+          <td>
+            <% if trip.pending? %>
+                <%= link_to "Cancelar", user_trip_path(current_user,trip), method: :delete %></td>
+            <% end %>
+        </tr>
+      <% end %>
+    </table>
+
+  </div>
+</div>
+

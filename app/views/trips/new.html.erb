@@ -1,0 +1,59 @@
+<%= render 'menu/navbar' %>
+
+
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+
+    <% if params[:founded] %>
+        <div class="alert alert-danger mt-4" role="alert">
+          No hay paseadores disponibles para su busqueda
+        </div>
+    <% end %>
+
+
+    <div class="card mt-4 pt-4 pl-4 pb-4 pr-4">
+
+        <%= form_for [current_user, @trip] do |f| %>
+
+            <div class="form-group">
+              <label>Ubicación</label>
+              <%= f.select(:location_id, Location.all.collect {|a| [a.name, a.id]},{}, class: 'form-control')%>
+            </div>
+
+            <div class="form-group">
+              <%= f.text_field :address, {class: 'form-control', placeholder: "Dirección"} %>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= f.text_field :date, {class: 'form-control', placeholder: "Fecha y hora DD-MM-AAAA HH:MM"} %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= f.number_field :duration, {class: 'form-control', placeholder: "Duración"} %>
+                </div>
+              </div>
+            </div>
+
+
+            <h5>Mascotas</h5>
+            <% current_user.pets.each do |pet| %>
+              <input type="checkbox" name="trip[pet_ids][]" value="<%= pet.id %>">
+              <%= pet.name %>
+            <% end %>
+
+
+            <div class="actions">
+              <%= f.submit 'Guardar' , class: "btn btn-primary" %>
+            </div>
+
+    <% end %>
+
+    </div>
+    <%= link_to '<< Regresar', authenticated_root_path %>
+  </div>
+</div>
+
